@@ -1,0 +1,19 @@
+#load("/cloud/project/V0.RData")
+data = V0
+
+
+## 1- DEPURACIÓN
+fechas <- as.Date(as.character(data$f_destete),format="%d/%m/%Y")
+data$f_destete <-fechas
+fechas <- as.Date(as.character(data$f_nacim),format="%d/%m/%Y")
+data$f_nacim <-fechas
+data$edad_d = data$f_destete - data$f_nacim
+data$edad_d[data$edad_d <90 | data$edad_d>220] = "NA"
+
+data$tipo[which(data$tipo == "MC")] <- c("C ")
+data$tipo[data$tipo == "A "] <- c("C ")
+data$tipo[data$tipo == "AC"] <- c("C ")
+data$tipo[data$tipo == " "] <- NA
+data$tipo[data$tipo == ""] <- NA
+data$tipo <- factor(as.vector(data$tipo),levels = c('C ','N '))
+summary(data$tipo)

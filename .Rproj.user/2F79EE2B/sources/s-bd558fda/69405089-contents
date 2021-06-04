@@ -1,0 +1,160 @@
+load("/cloud/project/V0.RData")
+data = data.frame(V0,stringsAsFactors = FALSE)
+
+## 1- DEPURACIÓN
+data$f_destete <-as.Date(as.character(data$f_destete),format="%d/%m/%Y")
+data$f_nacim <-as.Date(as.character(data$f_nacim),format="%d/%m/%Y")
+data$edad_d = data$f_destete - data$f_nacim
+data$edad_d[data$edad_d <90 | data$edad_d>220] = NA
+
+data$alzada[data$alzada <80 | data$alzada>125] = NA
+data$long_cruz[data$long_cruz <40 | data$long_cruz>80] = NA
+data$ancho_muslos[data$ancho_muslos <30 | data$ancho_muslos>60] = NA
+data$curva_nalga[data$curva_nalga <1 | data$curva_nalga>5] = NA
+data$peri_torax[data$peri_torax <100 | data$peri_torax>175] = NA
+data$peso[data$peso <90 | data$peso>390] = NA
+
+
+data$tipo[data$tipo == "MC"] <- c("C ")
+data$tipo[data$tipo == "A "] <- c("C ")
+data$tipo[data$tipo == "AC"] <- c("C ")
+data$tipo[data$tipo == " "] <- NA
+data$tipo[data$tipo == ""] <- NA
+data$tipo <- factor(as.vector(data$tipo),levels = c('C ','N '))
+data$sexo[data$sexo == "C"] <- "M"
+data$sexo <- factor(as.vector(data$sexo),levels = c('M','H'))
+
+toros = subset(data,sexo=="M"); vacas = subset(data,sexo=="H");
+culonas = subset(data,tipo=="C "); normales = subset(data,tipo=="N ")
+
+## 2- DESCRIPCIÓN características
+summary(data)
+
+# valanceo sexo/tipo
+sum(which(data$sexo=="M" & data$tipo=="C "))
+sum(which(data$sexo=="H" & data$tipo=="C "))
+sum(which(data$sexo=="M" & data$tipo=="N "))
+sum(which(data$sexo=="H" & data$tipo=="N "))
+smoothScatter(data$tipo, data$sexo, nbin = 128,
+              colramp = colorRampPalette(c("white", blues9)),
+              nrpoints = 100, ret.selection = FALSE,
+              pch = ".", cex = 1, col = "black",
+              transformation = function(x) x^.25,
+              postPlotHook = box,
+              xlab = NULL, ylab = NULL, #xlim, ylim,
+              xaxs = par("xaxs"), yaxs = par("yaxs"))
+
+# 10 gráficas 
+# relación alzada/cruz
+smoothScatter(data$alzada, data$long_cruz, nbin = 128,
+              colramp = colorRampPalette(c("white", blues9)),
+              nrpoints = 100, ret.selection = FALSE,
+              pch = ".", cex = 1, col = "black",
+              transformation = function(x) x^.25,
+              postPlotHook = box,
+              xlab = NULL, ylab = NULL, #xlim, ylim,
+              xaxs = par("xaxs"), yaxs = par("yaxs"))
+
+# relación alzada/ancho muslo
+smoothScatter(data$alzada, data$ancho_muslos, nbin = 128,
+              colramp = colorRampPalette(c("white", blues9)),
+              nrpoints = 100, ret.selection = FALSE,
+              pch = ".", cex = 1, col = "black",
+              transformation = function(x) x^.25,
+              postPlotHook = box,
+              xlab = NULL, ylab = NULL, #xlim, ylim,
+              xaxs = par("xaxs"), yaxs = par("yaxs"))
+
+# relación alzada/peritorax
+smoothScatter(data$alzada, data$peri_torax, nbin = 128,
+              colramp = colorRampPalette(c("white", blues9)),
+              nrpoints = 100, ret.selection = FALSE,
+              pch = ".", cex = 1, col = "black",
+              transformation = function(x) x^.25,
+              postPlotHook = box,
+              xlab = NULL, ylab = NULL, #xlim, ylim,
+              xaxs = par("xaxs"), yaxs = par("yaxs"))
+
+# relación alzada/peso
+smoothScatter(data$alzada, data$peso, nbin = 128,
+              colramp = colorRampPalette(c("white", blues9)),
+              nrpoints = 100, ret.selection = FALSE,
+              pch = ".", cex = 1, col = "black",
+              transformation = function(x) x^.25,
+              postPlotHook = box,
+              xlab = NULL, ylab = NULL, #xlim, ylim,
+              xaxs = par("xaxs"), yaxs = par("yaxs"))
+
+# relación cruz/ancho muslo
+smoothScatter(data$long_cruz, data$ancho_muslos, nbin = 128,
+              colramp = colorRampPalette(c("white", blues9)),
+              nrpoints = 100, ret.selection = FALSE,
+              pch = ".", cex = 1, col = "black",
+              transformation = function(x) x^.25,
+              postPlotHook = box,
+              xlab = NULL, ylab = NULL, #xlim, ylim,
+              xaxs = par("xaxs"), yaxs = par("yaxs"))
+
+# relación cruz/periTorax
+smoothScatter(data$long_cruz, data$peri_torax, nbin = 128,
+              colramp = colorRampPalette(c("white", blues9)),
+              nrpoints = 100, ret.selection = FALSE,
+              pch = ".", cex = 1, col = "black",
+              transformation = function(x) x^.25,
+              postPlotHook = box,
+              xlab = NULL, ylab = NULL, #xlim, ylim,
+              xaxs = par("xaxs"), yaxs = par("yaxs"))
+
+# relación cruz/peso
+smoothScatter(data$long_cruz, data$peso, nbin = 128,
+              colramp = colorRampPalette(c("white", blues9)),
+              nrpoints = 100, ret.selection = FALSE,
+              pch = ".", cex = 1, col = "black",
+              transformation = function(x) x^.25,
+              postPlotHook = box,
+              xlab = NULL, ylab = NULL, #xlim, ylim,
+              xaxs = par("xaxs"), yaxs = par("yaxs"))
+
+# relación ancho muslo/periTorax
+smoothScatter(data$ancho_muslos, data$peri_torax, nbin = 128,
+              colramp = colorRampPalette(c("white", blues9)),
+              nrpoints = 100, ret.selection = FALSE,
+              pch = ".", cex = 1, col = "black",
+              transformation = function(x) x^.25,
+              postPlotHook = box,
+              xlab = NULL, ylab = NULL, #xlim, ylim,
+              xaxs = par("xaxs"), yaxs = par("yaxs"))
+
+# relación ancho muslo/peso
+smoothScatter(data$ancho_muslos, data$peso, nbin = 128,
+              colramp = colorRampPalette(c("white", blues9)),
+              nrpoints = 100, ret.selection = FALSE,
+              pch = ".", cex = 1, col = "black",
+              transformation = function(x) x^.25,
+              postPlotHook = box,
+              xlab = NULL, ylab = NULL, #xlim, ylim,
+              xaxs = par("xaxs"), yaxs = par("yaxs"))
+
+# relación peritorax/peso
+smoothScatter(data$peri_torax, data$peso, nbin = 128,
+              colramp = colorRampPalette(c("white", blues9)),
+              nrpoints = 100, ret.selection = FALSE,
+              pch = ".", cex = 1, col = "black",
+              transformation = function(x) x^.25,
+              postPlotHook = box,
+              xlab = NULL, ylab = NULL, #xlim, ylim,
+              xaxs = par("xaxs"), yaxs = par("yaxs"))
+
+
+## MODELOS
+N_tot = length(data$id)
+train = sample(c(1:N_tot), round(0.70*N_tot))
+validation = setdiff(c(1:N_tot), train)
+
+reg0 = lm(peso~alzada,data=data,subset=train)
+#crPlots(reg0,smooth=list(span=0.5))
+#oldpar = par(oma=c(0,0,3,0),mfrow=c(2,2))
+plot(reg0)
+#par(oldpar)
+
+

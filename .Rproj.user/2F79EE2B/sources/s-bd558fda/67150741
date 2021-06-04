@@ -1,0 +1,32 @@
+{
+    "id": "67150741",
+    "path": null,
+    "project_path": null,
+    "type": "r_dataframe",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1606720491056.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "expression": "toros",
+        "caption": "toros",
+        "totalObservations": 19787,
+        "displayedObservations": 19787,
+        "variables": 12,
+        "cacheKey": "D10640B2",
+        "object": "toros",
+        "environment": "",
+        "contentUrl": "grid_resource/gridviewer.html?env=&obj=toros&cache_key=D10640B2&max_cols=50",
+        "preview": 0
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1606720474,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1606720491056,
+    "read_only": false,
+    "read_only_alternatives": []
+}
