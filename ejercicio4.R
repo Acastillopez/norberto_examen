@@ -81,3 +81,8 @@ summary(mod_MOTIVA)
 ### MODELO TODAS VARIABLES
 mod_todas =  glm(Repetir$Repetir ~ Sexo + ISEC + Publico + MOTIVA,family=binomial(link='logit'))
 summary(mod_todas)
+
+h = predict(mod_todas, data.frame(
+  Sexo = "Mujer", ISEC = 0.3, Publico = "Si", MOTIVA = 1.0))
+p = 1/(1-exp(h))
+  
